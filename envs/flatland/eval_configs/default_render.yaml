@@ -1,0 +1,11 @@
+evaluation_num_workers: 2
+# Evaluation wokers for the evaluation run.
+evaluation_interval: 50
+# Episodes each time evaluation runs. Reduced episodes for rendering
+evaluation_num_episodes: 5
+# Override the env config for evaluation.
+evaluation_config:
+   explore: False
+   env_config:
+       seed: 100
+       render: human

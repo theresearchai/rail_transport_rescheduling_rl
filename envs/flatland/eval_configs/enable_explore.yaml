@@ -1,0 +1,10 @@
+evaluation_num_workers: 2
+# Evaluation wokers for the evaluation run.
+evaluation_interval: 50
+# Episodes each time evaluation runs.
+evaluation_num_episodes: 50
+# Override the env config for evaluation.
+evaluation_config:
+   # explore: False
+   env_config:
+       seed: 100

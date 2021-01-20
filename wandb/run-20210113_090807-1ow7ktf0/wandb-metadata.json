@@ -1,0 +1,25 @@
+{
+    "root": "/Users/stlp/Desktop/neurips2020-flatland-baselines",
+    "program": "train.py",
+    "git": {
+        "remote": "http://gitlab.aicrowd.com/flatland/neurips2020-flatland-baselines.git",
+        "commit": "3b3f0c1daaa341a83194302c5dbcc4d54983ec9b"
+    },
+    "email": "qye25@wisc.edu",
+    "startedAt": "2021-01-13T09:08:08.892506",
+    "host": "STLP-0109",
+    "username": "stlp",
+    "executable": "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/bin/python",
+    "os": "Darwin-19.6.0-x86_64-i386-64bit",
+    "python": "3.7.9",
+    "cpu_count": 8,
+    "args": [
+        "-f",
+        "baselines/apex_tree_obs/apex.yaml"
+    ],
+    "state": "running",
+    "jobType": null,
+    "mode": "run",
+    "project": "flatland-paper",
+    "heartbeatAt": "2021-01-13T09:08:11.239348"
+}
