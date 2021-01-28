@@ -7,11 +7,11 @@ flatland-random-sparse-small-tree-fc-marwil-il:
     checkpoint_at_end: True
     keep_checkpoints_num: 100000000
     checkpoint_score_attr: episode_reward_mean
-    num_samples: 3
+    num_samples: 1
     config:
         beta:
             grid_search: [1]   # compare IL (beta=0) vs MARWIL
-        input: /tmp/flatland-out
+        input: /Users/stlp/Desktop/rail_transport_rescheduling_rl/imitation_learning/convert_demonstration
         input_evaluation: [is, wis, simulation]
         # effective batch_size: train_batch_size * num_agents_in_each_environment [5, 10]
         # see https://github.com/ray-project/ray/issues/4628
@@ -19,9 +19,9 @@ flatland-random-sparse-small-tree-fc-marwil-il:
         rollout_fragment_length: 50  # 100
         batch_mode: truncate_episodes
         observation_filter: NoFilter
-        num_workers: 13
+        num_workers: 3
         num_envs_per_worker: 5
-        num_gpus: 0
+        num_gpus: 1
 
         env_config:
             observation: tree
@@ -33,8 +33,8 @@ flatland-random-sparse-small-tree-fc-marwil-il:
             generator_config: small_v0
 
             wandb:
-                project: flatland-paper
-                entity: aicrowd
+                project: flatland-IL
+                entity: qye25
                 tags: ["small_v0", "tree_obs", "MARWIL"] # TODO should be set programmatically
 
         model:
