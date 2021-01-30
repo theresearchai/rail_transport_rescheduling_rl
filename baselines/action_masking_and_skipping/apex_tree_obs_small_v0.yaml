@@ -5,15 +5,19 @@ apex-tree-obs-small-v0:
         timesteps_total: 15000000  # 1.5e7
     checkpoint_freq: 50
     checkpoint_at_end: True
-    keep_checkpoints_num: 100000000
+    keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
-    num_samples: 3
+    num_samples: 1
     config:
-        num_workers: 13
+        num_workers: 3
         num_envs_per_worker: 5
-        num_gpus: 0
+        num_gpus: 1
 
         env_config:
+            seed: 1
+            save_checkpoint: True
+            render: human
+
             observation: tree
             observation_config:
                 max_depth: 2
@@ -23,8 +27,8 @@ apex-tree-obs-small-v0:
             generator_config: small_v0
 
             wandb:
-                project: flatland-paper
-                entity: aicrowd
+                project: action-masking-skipping
+                entity: qye25
                 tags: ["small_v0", "tree_obs", "apex"] # TODO should be set programmatically
 
         model:
