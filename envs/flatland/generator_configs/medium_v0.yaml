@@ -1,6 +1,6 @@
 width: 50
 height: 50
-number_of_agents: 20
+number_of_agents: 15
 max_num_cities: 6
 max_rails_between_cities: 4
 max_rails_in_city: 4
