@@ -1,15 +1,16 @@
-ppo-tree-obs-small-v0:
-    run: PPO
+apex-tree-obs-medium-v0:
+    run: APEX
     env: flatland_sparse
     stop:
-        timesteps_total: 15000000  # 1.5e7
+        #timesteps_total: 15000000  # 1.5e7
+        training_iteration: 500
     checkpoint_freq: 50
     checkpoint_at_end: True
     keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
     num_samples: 1
 
-    # restore: /content/gdrive/MyDrive/checkpoints/ppo-tree-obs-small-v0/.../checkpoint_100/checkpoint-100
+    # restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-medium-v0-skip/APEX_flatland_sparse_0_2021-01-30_09-02-39gttsai17/checkpoint_50/checkpoint-50
     local_dir: /content/gdrive/MyDrive/checkpoints
 
     config:
@@ -17,20 +18,10 @@ ppo-tree-obs-small-v0:
         num_envs_per_worker: 5
         num_gpus: 1
 
-        clip_rewards: False
-        vf_clip_param: 500.0
-        entropy_coeff: 0.01
-        # effective batch_size: train_batch_size * num_agents_in_each_environment [5, 10]
-        # see https://github.com/ray-project/ray/issues/4628
-        train_batch_size: 1000  # 5000
-        rollout_fragment_length: 50  # 100
-        sgd_minibatch_size: 100  # 500
-        vf_share_layers: False
-
         env_config:
             seed: 1
             save_checkpoint: True
-            render: human
+            # render: human
 
             observation: tree
             observation_config:
@@ -38,12 +29,12 @@ ppo-tree-obs-small-v0:
                 shortest_path_max_depth: 30
 
             generator: sparse_rail_generator
-            generator_config: small_v0
+            generator_config: medium_v0
 
             wandb:
                 project: action-masking-skipping
                 entity: qye25
-                tags: ["small_v0", "tree_obs", "ppo"] # TODO should be set programmatically
+                tags: ["medium_v0", "tree_obs", "apex"] # TODO should be set programmatically
 
         model:
             fcnet_activation: relu

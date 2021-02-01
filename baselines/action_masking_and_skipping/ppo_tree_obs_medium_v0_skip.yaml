@@ -1,15 +1,15 @@
-sparse-mask-ppo-tree-obs-small-v0:
+ppo-tree-obs-medium-v0-skip:
     run: PPO
     env: flatland_sparse
     stop:
-        timesteps_total: 150000  # 1.5e7
+        timesteps_total: 15000000  # 1.5e7
     checkpoint_freq: 50
     checkpoint_at_end: True
     keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
     num_samples: 1
 
-    # restore: /content/gdrive/MyDrive/checkpoints/sparse-mask-ppo-tree-obs-small-v0/PPO_flatland_sparse_0_2021-01-30_08-53-52e7gi0h_8/checkpoint_113/checkpoint-113
+    # restore: /content/gdrive/MyDrive/checkpoints/ppo-tree-obs-small-v0-skip/PPO_flatland_sparse_0_2021-01-30_07-42-328_b6n4lq/checkpoint_50/checkpoint-50
     local_dir: /content/gdrive/MyDrive/checkpoints
 
     config:
@@ -31,7 +31,7 @@ sparse-mask-ppo-tree-obs-small-v0:
         env_config:
             seed: 1
             save_checkpoint: True
-            render: human
+            # render: human
 
             observation: tree
             observation_config:
@@ -39,20 +39,18 @@ sparse-mask-ppo-tree-obs-small-v0:
                 shortest_path_max_depth: 30
 
             generator: sparse_rail_generator
-            generator_config: small_v0
+            generator_config: medium_v0
 
-            available_actions_obs: True
-            allow_noop: False
+            skip_no_choice_cells: True
+            accumulate_skipped_rewards: True
+            discounting: 0.99  # TODO set automatically, should be equal to gamma
 
             wandb:
                 project: action-masking-skipping
                 entity: qye25
-                tags: ["small_v0", "tree_obs", "ppo", "mask"] # TODO should be set programmatically
+                tags: ["medium_v0", "tree_obs", "ppo", "skip"] # TODO should be set programmatically
 
         model:
-            custom_model: fully_connected_model
-            custom_options:
-                layers: [256, 256]
-                activation: relu
-                layer_norm: False
-                mask_unavailable_actions: True
+            fcnet_activation: relu
+            fcnet_hiddens: [256, 256]
+            vf_share_layers: True  # False

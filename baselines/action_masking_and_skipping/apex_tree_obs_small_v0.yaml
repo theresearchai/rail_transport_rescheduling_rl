@@ -2,12 +2,17 @@ apex-tree-obs-small-v0:
     run: APEX
     env: flatland_sparse
     stop:
-        timesteps_total: 15000000  # 1.5e7
+        #timesteps_total: 15000000  # 1.5e7
+        training_iteration: 500
     checkpoint_freq: 50
     checkpoint_at_end: True
     keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
     num_samples: 1
+
+    # restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-small-v0-skip/APEX_flatland_sparse_0_2021-01-30_09-02-39gttsai17/checkpoint_50/checkpoint-50
+    local_dir: /content/gdrive/MyDrive/checkpoints
+
     config:
         num_workers: 3
         num_envs_per_worker: 5
@@ -16,7 +21,7 @@ apex-tree-obs-small-v0:
         env_config:
             seed: 1
             save_checkpoint: True
-            render: human
+            # render: human
 
             observation: tree
             observation_config:

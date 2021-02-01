@@ -1,4 +1,4 @@
-sparse-mask-ppo-tree-obs-small-v0:
+sparse-mask-ppo-tree-obs-medium-v0:
     run: PPO
     env: flatland_sparse
     stop:
@@ -39,7 +39,7 @@ sparse-mask-ppo-tree-obs-small-v0:
                 shortest_path_max_depth: 30
 
             generator: sparse_rail_generator
-            generator_config: small_v0
+            generator_config: medium_v0
 
             available_actions_obs: True
             allow_noop: False
@@ -47,7 +47,7 @@ sparse-mask-ppo-tree-obs-small-v0:
             wandb:
                 project: action-masking-skipping
                 entity: qye25
-                tags: ["small_v0", "tree_obs", "ppo", "mask"] # TODO should be set programmatically
+                tags: ["medium_v0", "tree_obs", "ppo", "mask"] # TODO should be set programmatically
 
         model:
             custom_model: fully_connected_model
