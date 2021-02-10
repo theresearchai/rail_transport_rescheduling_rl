@@ -9,6 +9,8 @@ import pickle
 import shelve
 from pathlib import Path
 import random
+import yaml
+import time
 
 import gym
 import numpy as np
@@ -23,6 +25,7 @@ from ray.rllib.utils.space_utils import flatten_to_single_ndarray # ray 0.8.5
 from ray.tune.utils import merge_dicts
 
 from utils.loader import load_envs, load_models, load_algorithms
+import wandb
 
 logger = logging.getLogger(__name__)
 
@@ -199,9 +202,9 @@ def create_parser(parser_creator=None):
                     "given a checkpoint.",
         epilog=EXAMPLE_USAGE)
 
-    parser.add_argument(
-        "checkpoint", type=str, help="Checkpoint from which to roll out.")
     required_named = parser.add_argument_group("required named arguments")
+    required_named.add_argument(
+        "--checkpoint", type=str, help="Checkpoint from which to roll out.")
     required_named.add_argument(
         "--run",
         type=str,
@@ -232,6 +235,13 @@ def create_parser(parser_creator=None):
         default="{}",
         type=json.loads,
         help="Algorithm-specific configuration (e.g. env, hyperparams). "
+             "Surpresses loading of configuration from checkpoint.")
+    parser.add_argument(
+        "--cfile",
+        default="{}",
+        type=str,
+        help= "Load config from .pkl file."
+            "Algorithm-specific configuration (e.g. env, hyperparams). "
              "Surpresses loading of configuration from checkpoint.")
     parser.add_argument(
         "--episodes",
@@ -267,17 +277,19 @@ def run(args, parser):
     config = {}
     # Load configuration from file
     config_dir = os.path.dirname(args.checkpoint)
-    config_path = os.path.join(config_dir, "params.pkl")
+    # config_path = os.path.join(config_dir, "params.pkl")
+    config_path = args.cfile
     if not os.path.exists(config_path):
-        config_path = os.path.join(config_dir, "../params.pkl")
+        config_path = os.path.join(config_dir, "../",args.cfile)
     if not os.path.exists(config_path):
         if not args.config:
             raise ValueError(
-                "Could not find params.pkl in either the checkpoint dir or "
-                "its parent directory.")
+                "Could not find " + args.cfile + " in the checkpoint's parent dir.")
     else:
         with open(config_path, "rb") as f:
-            config = pickle.load(f)
+            config = yaml.safe_load(f)
+        # with open(config_path, "rb") as f:
+        #     config = pickle.load(f)
     if "num_workers" in config:
         config["num_workers"] = min(2, config["num_workers"])
 
@@ -288,6 +300,7 @@ def run(args, parser):
             parser.error("the following arguments are required: --env")
         args.env = config.get("env")
 
+    wandb.init(config=config, project="rollout")
     ray.init()
     
     if args.eager:
@@ -296,7 +309,6 @@ def run(args, parser):
         config['eager'] = True
     
     cls = get_trainable_cls(args.run)
-    
     agent = cls(env=args.env, config=config)
     agent.restore(args.checkpoint)
     num_steps = int(args.steps)
@@ -377,7 +389,7 @@ def rollout(agent,
         # which is set to record every episode.
         env = gym.wrappers.Monitor(
             env, os.path.join(os.path.dirname(saver.outfile), "monitor"),
-            lambda x: True)
+            video_callable=lambda x: True, force=True)
 
     steps = 0
     episodes = 0
@@ -385,6 +397,8 @@ def rollout(agent,
     simulation_rewards_normalized = []
     simulation_percentage_complete = []
     simulation_steps = []
+    start = time.time()
+    times = []
 
     while keep_going(steps, num_steps, episodes, num_episodes):
         mapping_cache = {}  # in case policy_agent_mapping is stochastic
@@ -403,6 +417,7 @@ def rollout(agent,
         episode_num_agents = 0
         agents_score = collections.defaultdict(lambda: 0.)
         agents_done = set()
+        start_time = time.time()
 
         while not done and keep_going(steps, num_steps, episodes,
                                       num_episodes):
@@ -473,8 +488,14 @@ def rollout(agent,
         simulation_rewards_normalized.append(episode_score / (episode_max_steps * episode_num_agents))
         simulation_percentage_complete.append(float(len(agents_done)) / episode_num_agents)
         simulation_steps.append(episode_steps)
+        end_time = time.time()
+        times.append(end_time - start_time)
 
         saver.end_rollout()
+        wandb.log({'Episode':episodes, 'score': episode_score, 'normalized_score':simulation_rewards_normalized[-1],
+         'percentage_complete': simulation_percentage_complete[-1], 
+         'time_this_iter': end_time - start_time, 'cum_time': end_time - start})
+
         print(f"Episode #{episodes}: "
               f"score: {episode_score:.2f} "
               f"({np.mean(simulation_rewards):.2f}), "
@@ -492,7 +513,7 @@ def rollout(agent,
           f"Mean Percentage Complete: {np.round(np.mean(simulation_percentage_complete), 3)}\n"
           f"Mean Steps: {np.round(np.mean(simulation_steps), 2)}")
 
-    return {
+    metric = {
         'reward': [float(r) for r in simulation_rewards],
         'reward_mean': np.mean(simulation_rewards),
         'reward_std': np.std(simulation_rewards),
@@ -505,7 +526,12 @@ def rollout(agent,
         'steps': [float(c) for c in simulation_steps],
         'steps_mean': np.mean(simulation_steps),
         'steps_std': np.std(simulation_steps),
+        'time': [float(r) for r in times],
+        'time_mean': np.mean(times),
+        'time_std': np.std(times)
     }
+    wandb.log(metric)
+    return metric
 
 
 if __name__ == "__main__":
