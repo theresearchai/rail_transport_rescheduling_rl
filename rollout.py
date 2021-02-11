@@ -1,60 +1,60 @@
-#!/usr/bin/env python
-
 import argparse
 import collections
-import json
-import logging
-import os
-import pickle
-import shelve
-from pathlib import Path
-import random
-import yaml
-import time
-
+import copy
 import gym
+from gym import wrappers as gym_wrappers
+import json
+import os
+from pathlib import Path
+import shelve
 import numpy as np
+import logging
+import random
+
 import ray
-from ray.rllib.agents.registry import get_agent_class
-from ray.tune.registry import get_trainable_cls
+import ray.cloudpickle as cloudpickle
 from ray.rllib.env import MultiAgentEnv
 from ray.rllib.env.base_env import _DUMMY_AGENT_ID
-# from ray.rllib.evaluation.episode import _flatten_action # ray 0.8.4
+from ray.rllib.env.env_context import EnvContext
+from ray.rllib.evaluation.worker_set import WorkerSet
 from ray.rllib.policy.sample_batch import DEFAULT_POLICY_ID
-from ray.rllib.utils.space_utils import flatten_to_single_ndarray # ray 0.8.5
+from ray.rllib.utils.deprecation import deprecation_warning
+from ray.rllib.utils.space_utils import flatten_to_single_ndarray
 from ray.tune.utils import merge_dicts
+from ray.tune.registry import get_trainable_cls, _global_registry, ENV_CREATOR
 
 from utils.loader import load_envs, load_models, load_algorithms
 import wandb
-
-logger = logging.getLogger(__name__)
-
-EXAMPLE_USAGE = """
-Example Usage:
-    python rollout.py /Users/flaurent/Sites/flatland/flatland-checkpoints/checkpoint_940/checkpoint-940 --run APEX --no-render --episodes 1000 --env 'flatland_random_sparse_small' --config '{"env_config": {"test": "true", "min_seed": 1002, "max_seed": 213783, "min_test_seed": 0, "max_test_seed": 100, "reset_env_freq": "1", "regenerate_rail_on_reset": "True", "regenerate_schedule_on_reset": "True", "observation": "tree", "observation_config": {"max_depth": 2, "shortest_path_max_depth": 30}}, "model": {"fcnet_activation": "relu", "fcnet_hiddens": [256, 256], "vf_share_layers": "True"}}' 
-"""
-
-"""
-# Testing in flatland_random_sparse_small:
-python rollout.py /Users/flaurent/Sites/flatland/flatland-checkpoints/checkpoint_940/checkpoint-940 --run APEX --no-render --episodes 1000 --env 'flatland_random_sparse_small' --config '{"env_config": {"test": "true", "min_seed": 1002, "max_seed": 213783, "min_test_seed": 0, "max_test_seed": 100, "reset_env_freq": "1", "regenerate_rail_on_reset": "True", "regenerate_schedule_on_reset": "True", "observation": "tree", "observation_config": {"max_depth": 2, "shortest_path_max_depth": 30}}, "model": {"fcnet_activation": "relu", "fcnet_hiddens": [256, 256], "vf_share_layers": "True"}}' 
-
-# Testing in flatland_sparse:
-python rollout.py /Users/flaurent/Sites/flatland/flatland-checkpoints/checkpoint_940/checkpoint-940 --run APEX --no-render --episodes 1000 --env 'flatland_sparse' --config '{"env_config": {"test": "true", "generator": "sparse_rail_generator", "generator_config": "small_v0", "observation": "tree", "observation_config": {"max_depth": 2, "shortest_path_max_depth": 30}}, "model": {"fcnet_activation": "relu", "fcnet_hiddens": [256, 256], "vf_share_layers": "True"}}' 
-"""
-
+import yaml
+import time
 # Register all necessary assets in tune registries
-load_envs(os.getcwd())  # Load envs
+# load_envs(os.getcwd())  # Load envs
 load_models(os.getcwd())  # Load models
 from algorithms import CUSTOM_ALGORITHMS
 load_algorithms(CUSTOM_ALGORITHMS)  # Load algorithms
 
+logger = logging.getLogger(__name__)
+final_epsilon =  0.02
+
+EXAMPLE_USAGE = """
+Example Usage via RLlib CLI:
+    rllib rollout /tmp/ray/checkpoint_dir/checkpoint-0 --run DQN
+    --env CartPole-v0 --steps 1000000 --out rollouts.pkl
+Example Usage via executable:
+    ./rollout.py /tmp/ray/checkpoint_dir/checkpoint-0 --run DQN
+    --env CartPole-v0 --steps 1000000 --out rollouts.pkl
+"""
+
+# Note: if you use any custom models or envs, register them here first, e.g.:
+#
+# from ray.rllib.examples.env.parametric_actions_cartpole import \
+#     ParametricActionsCartPole
+# from ray.rllib.examples.model.parametric_actions_model import \
+#     ParametricActionsModel
+# ModelCatalog.register_custom_model("pa_model", ParametricActionsModel)
+# register_env("pa_cartpole", lambda _: ParametricActionsCartPole(10))
 from collections.abc import Mapping
 from copy import deepcopy
-
-# Default terminal state epsilon
-# https://github.com/ray-project/ray/blob/master/rllib/agents/dqn/dqn.py
-final_epsilon =  0.02
-random.seed(1)
 
 def val_replace(mapping):
     obj = deepcopy(mapping)
@@ -70,10 +70,8 @@ def val_replace(mapping):
             return mapping
     return obj
 
-
 class RolloutSaver:
     """Utility class for storing rollouts.
-
     Currently supports two behaviours: the original, which
     simply dumps everything to a pickle file once complete,
     and a mode which stores each rollout as an entry in a Python
@@ -82,11 +80,9 @@ class RolloutSaver:
     is stored with a key based on the episode number (0-indexed),
     and the number of episodes is stored with the key "num_episodes",
     so to load the shelf file, use something like:
-
     with shelve.open('rollouts.pkl') as rollouts:
        for episode_index in range(rollouts["num_episodes"]):
           rollout = rollouts[str(episode_index)]
-
     If outfile is None, this class does nothing.
     """
 
@@ -148,7 +144,7 @@ class RolloutSaver:
             self._shelf.close()
         elif self._outfile and not self._use_shelve:
             # Dump everything as one big pickle:
-            pickle.dump(self._rollouts, open(self._outfile, "wb"))
+            cloudpickle.dump(self._rollouts, open(self._outfile, "wb"))
         if self._update_file:
             # Remove the temp progress file:
             self._get_tmp_progress_filename().unlink()
@@ -199,20 +195,20 @@ def create_parser(parser_creator=None):
     parser = parser_creator(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="Roll out a reinforcement learning agent "
-                    "given a checkpoint.",
+        "given a checkpoint.",
         epilog=EXAMPLE_USAGE)
 
     required_named = parser.add_argument_group("required named arguments")
-    required_named.add_argument(
+    parser.add_argument(
         "--checkpoint", type=str, help="Checkpoint from which to roll out.")
     required_named.add_argument(
         "--run",
         type=str,
         required=True,
         help="The algorithm or model to train. This may refer to the name "
-             "of a built-on algorithm (e.g. RLLib's DQN or PPO), or a "
-             "user-defined trainable function or class registered in the "
-             "tune registry.")
+        "of a built-on algorithm (e.g. RLLib's DQN or PPO), or a "
+        "user-defined trainable function or class registered in the "
+        "tune registry.")
     required_named.add_argument(
         "--env", type=str, help="The gym environment to use.")
     parser.add_argument(
@@ -220,22 +216,35 @@ def create_parser(parser_creator=None):
         default=False,
         action="store_const",
         const=True,
-        help="Surpress rendering of the environment.")
+        help="Suppress rendering of the environment.")
     parser.add_argument(
         "--monitor",
         default=False,
-        action="store_const",
-        const=True,
-        help="Wrap environment in gym Monitor to record video.")
+        action="store_true",
+        help="Wrap environment in gym Monitor to record video. NOTE: This "
+        "option is deprecated: Use `--video-dir [some dir]` instead.")
     parser.add_argument(
-        "--steps", default=10000, help="Number of steps to roll out.")
+        "--video-dir",
+        type=str,
+        default=None,
+        help="Specifies the directory into which videos of all episode "
+        "rollouts will be stored.")
+    parser.add_argument(
+        "--steps",
+        default=10000,
+        help="Number of timesteps to roll out (overwritten by --episodes).")
+    parser.add_argument(
+        "--episodes",
+        default=0,
+        help="Number of complete episodes to roll out (overrides --steps).")
     parser.add_argument("--out", default=None, help="Output filename.")
     parser.add_argument(
         "--config",
         default="{}",
         type=json.loads,
         help="Algorithm-specific configuration (e.g. env, hyperparams). "
-             "Surpresses loading of configuration from checkpoint.")
+        "Gets merged with loaded configuration from checkpoint file and "
+        "`evaluation_config` settings therein.")
     parser.add_argument(
         "--cfile",
         default="{}",
@@ -244,75 +253,96 @@ def create_parser(parser_creator=None):
             "Algorithm-specific configuration (e.g. env, hyperparams). "
              "Surpresses loading of configuration from checkpoint.")
     parser.add_argument(
-        "--episodes",
-        default=0,
-        help="Number of complete episodes to roll out. (Overrides --steps)")
-    parser.add_argument(
         "--save-info",
         default=False,
         action="store_true",
         help="Save the info field generated by the step() method, "
-             "as well as the action, observations, rewards and done fields.")
+        "as well as the action, observations, rewards and done fields.")
     parser.add_argument(
         "--use-shelve",
         default=False,
         action="store_true",
         help="Save rollouts into a python shelf file (will save each episode "
-             "as it is generated). An output filename must be set using --out.")
+        "as it is generated). An output filename must be set using --out.")
     parser.add_argument(
         "--track-progress",
         default=False,
         action="store_true",
         help="Write progress to a temporary file (updated "
-             "after each episode). An output filename must be set using --out; "
-             "the progress file will live in the same folder.")
-    parser.add_argument(
-        "--eager",
-        action="store_true",
-        help="Whether to attempt to enable TF eager execution.")
+        "after each episode). An output filename must be set using --out; "
+        "the progress file will live in the same folder.")
     return parser
 
 
 def run(args, parser):
-    config = {}
-    # Load configuration from file
+    # Load configuration from checkpoint file.
     config_dir = os.path.dirname(args.checkpoint)
     # config_path = os.path.join(config_dir, "params.pkl")
     config_path = args.cfile
+    # Try parent directory.
     if not os.path.exists(config_path):
-        config_path = os.path.join(config_dir, "../",args.cfile)
+        config_path = os.path.join(config_dir, "../", args.cfile)
+
+    # If no yaml file found, require command line `--config`.
     if not os.path.exists(config_path):
         if not args.config:
             raise ValueError(
-                "Could not find " + args.cfile + " in the checkpoint's parent dir.")
+                "Could not find params.pkl in either the checkpoint dir or "
+                "its parent directory AND no config given on command line!")
+        else:
+            config = args.config
+
+    # Load the config from pickled.
     else:
         with open(config_path, "rb") as f:
             config = yaml.safe_load(f)
-        # with open(config_path, "rb") as f:
-        #     config = pickle.load(f)
+
+    # Set num_workers to be at least 2.
     if "num_workers" in config:
         config["num_workers"] = min(2, config["num_workers"])
 
-    updated_config = val_replace(args.config)
-    config = merge_dicts(config, updated_config)
+    # Make sure worker 0 has an Env.
+    # config["create_env_on_driver"] = True
+
+    # Merge with `evaluation_config` (first try from command line, then from
+    # pkl file).
+    evaluation_config = copy.deepcopy(
+        args.config.get("evaluation_config", config.get(
+            "evaluation_config", {})))
+    config = merge_dicts(config, evaluation_config)
+    # Merge with command line `--config` settings (if not already the same
+    # anyways).
+    config = merge_dicts(config, args.config)
+
     if not args.env:
         if not config.get("env"):
             parser.error("the following arguments are required: --env")
         args.env = config.get("env")
 
     wandb.init(config=config, project="rollout")
+    
     ray.init()
-    
-    if args.eager:
-        from tensorflow.python.framework.ops import enable_eager_execution
-        enable_eager_execution()
-        config['eager'] = True
-    
+
+    # Create the Trainer from config.
     cls = get_trainable_cls(args.run)
     agent = cls(env=args.env, config=config)
+    # Load state from checkpoint.
     agent.restore(args.checkpoint)
     num_steps = int(args.steps)
     num_episodes = int(args.episodes)
+
+    # Determine the video output directory.
+    # Deprecated way: Use (--out|~/ray_results) + "/monitor" as dir.
+    video_dir = None
+    if args.monitor:
+        video_dir = os.path.join(
+            os.path.dirname(args.out or "")
+            or os.path.expanduser("~/ray_results/"), "monitor")
+    # New way: Allow user to specify a video output path.
+    elif args.video_dir:
+        video_dir = os.path.expanduser(args.video_dir)
+    wandb.save(video_dir)
+    # Do the actual rollout.
     with RolloutSaver(
             args.out,
             args.use_shelve,
@@ -320,11 +350,9 @@ def run(args, parser):
             target_steps=num_steps,
             target_episodes=num_episodes,
             save_info=args.save_info) as saver:
-        outcome = rollout(agent, args.env, num_steps, num_episodes, saver,
-                          args.no_render, args.monitor)
-        outcome_file = os.path.join(os.path.dirname(config_path), 'test_outcome.json')
-        with open(outcome_file, 'w') as f:
-            json.dump(outcome, f, indent=4)
+        rollout(agent, args.env, num_steps, num_episodes, saver,
+                args.no_render, video_dir)
+    agent.stop()
 
 
 class DefaultMapping(collections.defaultdict):
@@ -357,14 +385,15 @@ def rollout(agent,
             num_episodes=0,
             saver=None,
             no_render=True,
-            monitor=False):
+            video_dir=None):
     policy_agent_mapping = default_policy_agent_mapping
 
     if saver is None:
         saver = RolloutSaver()
 
-    if hasattr(agent, "workers"):
+    if hasattr(agent, "workers") and isinstance(agent.workers, WorkerSet):
         env = agent.workers.local_worker().env
+        env.render()
         multiagent = isinstance(env, MultiAgentEnv)
         if agent.workers.local_worker().multiagent:
             policy_agent_mapping = agent.config["multiagent"][
@@ -373,23 +402,40 @@ def rollout(agent,
         policy_map = agent.workers.local_worker().policy_map
         state_init = {p: m.get_initial_state() for p, m in policy_map.items()}
         use_lstm = {p: len(s) > 0 for p, s in state_init.items()}
-        action_init = {
-            p: flatten_to_single_ndarray(m.action_space.sample()) # ray 0.8.5
-            # p: _flatten_action(m.action_space.sample()) # ray 0.8.4
-            for p, m in policy_map.items()
-        }
     else:
-        env = gym.make(env_name)
+        from gym import envs
+        if envs.registry.env_specs.get(agent.config["env"]):
+            # if environment is gym environment, load from gym
+            env = gym.make(agent.config["env"])
+        else:
+            # if environment registered ray environment, load from ray
+            env_creator = _global_registry.get(ENV_CREATOR,
+                                               agent.config["env"])
+            env_context = EnvContext(
+                agent.config["env_config"] or {}, worker_index=0)
+            env = env_creator(env_context)
         multiagent = False
+        try:
+            policy_map = {DEFAULT_POLICY_ID: agent.policy}
+        except AttributeError:
+            raise AttributeError(
+                "Agent ({}) does not have a `policy` property! This is needed "
+                "for performing (trained) agent rollouts.".format(agent))
         use_lstm = {DEFAULT_POLICY_ID: False}
 
-    if monitor and not no_render and saver and saver.outfile is not None:
-        # If monitoring has been requested,
-        # manually wrap our environment with a gym monitor
-        # which is set to record every episode.
-        env = gym.wrappers.Monitor(
-            env, os.path.join(os.path.dirname(saver.outfile), "monitor"),
-            video_callable=lambda x: True, force=True)
+    action_init = {
+        p: flatten_to_single_ndarray(m.action_space.sample())
+        for p, m in policy_map.items()
+    }
+
+    # If monitoring has been requested, manually wrap our environment with a
+    # gym monitor, which is set to record every episode.
+    if video_dir:
+        env = gym_wrappers.Monitor(
+            env=env,
+            directory=video_dir,
+            video_callable=lambda x: True,
+            force=True)
 
     steps = 0
     episodes = 0
@@ -442,14 +488,14 @@ def rollout(agent,
                             prev_action=prev_actions[agent_id],
                             prev_reward=prev_rewards[agent_id],
                             policy_id=policy_id)
-                    a_action = flatten_to_single_ndarray(a_action)  # ray 0.8.5
-                    # a_action = _flatten_action(a_action)  # tuple actions # ray 0.8.4
+                    a_action = flatten_to_single_ndarray(a_action)
 
                     # Epsilon-greedy action selection for APEX
                     if hasattr(agent, '_name'):
                         if agent._name == "APEX":
                             if random.random() <= final_epsilon:
                                 a_action = random.choice(np.arange(env.action_space.n))
+
 
                     action_dict[agent_id] = a_action
                     prev_actions[agent_id] = a_action
@@ -465,7 +511,8 @@ def rollout(agent,
 
             if multiagent:
                 done = done["__all__"]
-                reward_total += sum(reward.values())
+                reward_total += sum(
+                    r for r in reward.values() if r is not None)
             else:
                 reward_total += reward
             if not no_render:
@@ -496,16 +543,17 @@ def rollout(agent,
          'percentage_complete': simulation_percentage_complete[-1], 
          'time_this_iter': end_time - start_time, 'cum_time': end_time - start})
 
+        # print("Episode #{}: reward: {}".format(episodes, reward_total))
         print(f"Episode #{episodes}: "
-              f"score: {episode_score:.2f} "
-              f"({np.mean(simulation_rewards):.2f}), "
-              f"normalized score: {simulation_rewards_normalized[-1]:.2f} "
-              f"({np.mean(simulation_rewards_normalized):.2f}), "
-              f"percentage_complete: {simulation_percentage_complete[-1]:.2f} "
-              f"({np.mean(simulation_percentage_complete):.2f})")
+              f"score: {episode_score:.5f} "
+              f"({np.mean(simulation_rewards):.5f}), "
+              f"normalized score: {simulation_rewards_normalized[-1]:.5f} "
+              f"({np.mean(simulation_rewards_normalized):.5f}), "
+              f"percentage_complete: {simulation_percentage_complete[-1]:.5f} "
+              f"({np.mean(simulation_percentage_complete):.5f})")
         if done:
             episodes += 1
-
+    
     print("Evaluation completed:\n"
           f"Episodes: {episodes}\n"
           f"Mean Reward: {np.round(np.mean(simulation_rewards))}\n"
@@ -531,10 +579,31 @@ def rollout(agent,
         'time_std': np.std(times)
     }
     wandb.log(metric)
-    return metric
-
+    wandb.save(video_dir)
 
 if __name__ == "__main__":
     parser = create_parser()
     args = parser.parse_args()
+
+    # Old option: monitor, use video-dir instead.
+    if args.monitor:
+        deprecation_warning("--monitor", "--video-dir=[some dir]")
+    # User tries to record videos, but no-render is set: Error.
+    if (args.monitor or args.video_dir) and args.no_render:
+        raise ValueError(
+            "You have --no-render set, but are trying to record rollout videos"
+            " (via options --video-dir/--monitor)! "
+            "Either unset --no-render or do not use --video-dir/--monitor.")
+    # --use_shelve w/o --out option.
+    if args.use_shelve and not args.out:
+        raise ValueError(
+            "If you set --use-shelve, you must provide an output file via "
+            "--out as well!")
+    # --track-progress w/o --out option.
+    if args.track_progress and not args.out:
+        raise ValueError(
+            "If you set --track-progress, you must provide an output file via "
+            "--out as well!")
+
     run(args, parser)
+    
