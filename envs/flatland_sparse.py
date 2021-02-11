@@ -63,6 +63,10 @@ class FlatlandSparse(FlatlandBase):
             self._env = AvailableActionsWrapper(self._env, env_config.get('allow_noop', True))
 
     @property
+    def unwrapped(self):
+        return self
+
+    @property
     def observation_space(self) -> gym.spaces.Space:
         return self._env.observation_space
 
