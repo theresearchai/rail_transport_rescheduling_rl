@@ -1,22 +1,32 @@
-flatland-random-sparse-small-tree-fc-apex-il-loss:
+flatland-random-sparse-small-tree-fc-apex-il-loss-75:
     run: APEX
     env: flatland_sparse
     stop:
-        timesteps_total: 1000000000  # 1e9
+        timesteps_total: 10000000  # 1e7
+        training_iteration: 1000
     checkpoint_freq: 50
     checkpoint_at_end: True
-    keep_checkpoints_num: 100000000
+    keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
-    num_samples: 3
+    num_samples: 1
+
+    # restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-small-v0-skip/APEX_flatland_sparse_0_2021-01-30_09-02-39gttsai17/checkpoint_50/checkpoint-50
+
+    local_dir: /content/gdrive/MyDrive/checkpoints
+
     config:
         input:
-            "/tmp/flatland-out": 0.75
+            "/content/rail_transport_rescheduling_rl/imitation_learning/convert_demonstration": 0.75
             sampler: 0.25
-        num_workers: 13
+        num_workers: 3
         num_envs_per_worker: 1
-        num_gpus: 0
+        num_gpus: 1
 
         env_config:
+            save_checkpoint: True
+            seed: 1
+            # render: human
+
             observation: tree
             observation_config:
                 max_depth: 2
@@ -26,8 +36,8 @@ flatland-random-sparse-small-tree-fc-apex-il-loss:
             generator_config: small_v0
 
             wandb:
-                project: flatland-paper
-                entity: aicrowd
+                project: flatland-IL
+                entity: qye25
                 tags: ["small_v0", "tree_obs", "APEX_IL_Loss"] # TODO should be set programmatically
 
         model:
@@ -36,7 +46,7 @@ flatland-random-sparse-small-tree-fc-apex-il-loss:
             fcnet_hiddens: [256, 256]
             vf_share_layers: True  # False
             custom_options:
-                input_files: /tmp/flatland-out
+                input_files: /content/rail_transport_rescheduling_rl/imitation_learning/convert_demonstration
                 expert_size: 1
                 loss:
                    grid_search: [dqfd] # ce (cross entropy), kl (kl divergence)

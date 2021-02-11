@@ -17,9 +17,9 @@ flatland-random-sparse-medium-tree-fc-cctransformer:
         clip_param: 0.1
         # effective batch_size: train_batch_size * num_agents_in_each_environment [5, 10]
         # see https://github.com/ray-project/ray/issues/4628
-        train_batch_size: 1000  # 5000
-        rollout_fragment_length: 50  # 100
-        sgd_minibatch_size: 100  # 500
+        train_batch_size: 250  # 5000
+        rollout_fragment_length: 10  # 100
+        sgd_minibatch_size: 25  # 500
         num_sgd_iter: 10
         num_workers: 3
         num_envs_per_worker: 5

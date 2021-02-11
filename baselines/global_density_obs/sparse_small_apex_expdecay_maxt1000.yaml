@@ -7,16 +7,24 @@ flatland-sparse-small-density-cnn-apex:
     checkpoint_at_end: True
     keep_checkpoints_num: 100000000
     checkpoint_score_attr: episode_reward_mean
-    num_samples: 3
+    num_samples: 1
+
+    # restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-small-v0-skip/APEX_flatland_sparse_0_2021-01-30_09-02-39gttsai17/checkpoint_50/checkpoint-50
+    local_dir: /content/gdrive/MyDrive/checkpoints
+
     config:
-        num_workers: 13
+        num_workers: 3
         num_envs_per_worker: 5
-        num_gpus: 0
+        num_gpus: 1
 
         hiddens: []
         dueling: False
 
         env_config:
+            seed: 1
+            save_checkpoint: True
+            # render: human
+
             observation: density
             observation_config:
                 width: 25
@@ -29,7 +37,7 @@ flatland-sparse-small-density-cnn-apex:
 
             wandb:
                 project: flatland-paper
-                entity: aicrowd
+                entity: qye25
                 tags: ["small_v0", "density_obs", "apex"] # TODO should be set programmatically
 
         model:

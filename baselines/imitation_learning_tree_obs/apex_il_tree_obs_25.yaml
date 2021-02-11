@@ -1,14 +1,19 @@
-flatland-random-sparse-small-tree-fc-apex-il-loss:
+flatland-random-sparse-small-tree-fc-apex-il-loss-25:
     run: APEX
     env: flatland_sparse
     stop:
-        timesteps_total: 1000000000  # 1e9
-    save_checkpoint: True
-    checkpoint_freq: 100
+        timesteps_total: 10000000  # 1e7
+        training_iteration: 1000
+    checkpoint_freq: 50
     checkpoint_at_end: True
-    keep_checkpoints_num: 100000000
+    keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
     num_samples: 1
+
+    # restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-small-v0-skip/APEX_flatland_sparse_0_2021-01-30_09-02-39gttsai17/checkpoint_50/checkpoint-50
+
+    local_dir: /content/gdrive/MyDrive/checkpoints
+
     config:
         input:
             "/content/rail_transport_rescheduling_rl/imitation_learning/convert_demonstration": 0.25
@@ -18,7 +23,10 @@ flatland-random-sparse-small-tree-fc-apex-il-loss:
         num_gpus: 1
 
         env_config:
+            save_checkpoint: True
             seed: 1
+            render: human
+
             observation: tree
             observation_config:
                 max_depth: 2

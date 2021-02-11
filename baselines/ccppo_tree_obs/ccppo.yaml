@@ -7,7 +7,11 @@ flatland-random-sparse-small-tree-fc-cctransformer:
     checkpoint_at_end: True
     keep_checkpoints_num: 100000000
     checkpoint_score_attr: episode_reward_mean
-    num_samples: 3
+    num_samples: 1
+
+    restore: /content/gdrive/MyDrive/checkpoints/flatland-random-sparse-small-tree-fc-cctransformer/CcTransformer_flatland_sparse_0_2021-01-30_12-08-004vv9cde7/checkpoint_100/checkpoint-100
+    local_dir: /content/gdrive/MyDrive/checkpoints
+    
     config:
         clip_rewards: True
         clip_param: 0.1
@@ -17,13 +21,16 @@ flatland-random-sparse-small-tree-fc-cctransformer:
         rollout_fragment_length: 50  # 100
         sgd_minibatch_size: 100  # 500
         num_sgd_iter: 10
-        num_workers: 2
+        num_workers: 3
         num_envs_per_worker: 5
         batch_mode: complete_episodes
         vf_share_layers: True
         num_gpus: 1
 
         env_config:
+            seed: 1
+            save_checkpoint: True
+
             observation: tree
             sparse_reward: True
             done_reward: 1
@@ -39,7 +46,7 @@ flatland-random-sparse-small-tree-fc-cctransformer:
 
             wandb:
                 project: flatland-paper
-                entity: aicrowd
+                entity: qye25
                 tags: ["small_v0", "tree_obs","ccppo"] # TODO should be set programmatically
 
         model:

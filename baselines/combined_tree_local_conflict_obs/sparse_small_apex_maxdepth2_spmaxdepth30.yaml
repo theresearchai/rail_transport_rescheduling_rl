@@ -3,17 +3,25 @@ flatland-sparse-small-combined-obs-tree-local-conflict-apex:
     env: flatland_sparse
     stop:
         timesteps_total: 15000000  # 1.5e7
-    checkpoint_freq: 50
+    checkpoint_freq: 20
     checkpoint_at_end: True
-    keep_checkpoints_num: 100000000
+    keep_checkpoints_num: 1000
     checkpoint_score_attr: episode_reward_mean
-    num_samples: 3
+    num_samples: 1
+
+    # restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-small-v0-skip/APEX_flatland_sparse_0_2021-01-30_09-02-39gttsai17/checkpoint_50/checkpoint-50
+    local_dir: /content/gdrive/MyDrive/checkpoints
+
     config:
-        num_workers: 13
+        num_workers: 3
         num_envs_per_worker: 5
-        num_gpus: 0
+        num_gpus: 1
 
         env_config:
+            save_checkpoint: True
+            seed: 1
+            # render: human
+            
             observation: combined
             observation_config:
                 tree:
@@ -34,7 +42,7 @@ flatland-sparse-small-combined-obs-tree-local-conflict-apex:
 
             wandb:
                 project: flatland-paper
-                entity: aicrowd
+                entity: qye25
                 tags: ["small_v0", "tree_and_local_conflict", "apex"] # TODO should be set programmatically
 
         model:
