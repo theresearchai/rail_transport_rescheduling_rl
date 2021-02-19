@@ -27,8 +27,9 @@ from utils.loader import load_envs, load_models, load_algorithms
 import wandb
 import yaml
 import time
+
 # Register all necessary assets in tune registries
-# load_envs(os.getcwd())  # Load envs
+load_envs(os.getcwd())  # Load envs
 load_models(os.getcwd())  # Load models
 from algorithms import CUSTOM_ALGORITHMS
 load_algorithms(CUSTOM_ALGORITHMS)  # Load algorithms
@@ -320,7 +321,7 @@ def run(args, parser):
         args.env = config.get("env")
 
     wandb.init(config=config, project="rollout")
-    
+    # print(wandb.run.dir)
     ray.init()
 
     # Create the Trainer from config.
@@ -335,13 +336,14 @@ def run(args, parser):
     # Deprecated way: Use (--out|~/ray_results) + "/monitor" as dir.
     video_dir = None
     if args.monitor:
-        video_dir = os.path.join(
-            os.path.dirname(args.out or "")
-            or os.path.expanduser("~/ray_results/"), "monitor")
+        # video_dir = os.path.join(
+        #     os.path.dirname(args.out or "")
+        #     or os.path.expanduser("~/ray_results/"), "monitor")
+        video_dir = os.path.join(wandb.run.dir, "media")
     # New way: Allow user to specify a video output path.
     elif args.video_dir:
         video_dir = os.path.expanduser(args.video_dir)
-    wandb.save(video_dir)
+
     # Do the actual rollout.
     with RolloutSaver(
             args.out,
@@ -393,15 +395,15 @@ def rollout(agent,
 
     if hasattr(agent, "workers") and isinstance(agent.workers, WorkerSet):
         env = agent.workers.local_worker().env
-        env.render()
+        # env.render()
         multiagent = isinstance(env, MultiAgentEnv)
         if agent.workers.local_worker().multiagent:
             policy_agent_mapping = agent.config["multiagent"][
                 "policy_mapping_fn"]
-
         policy_map = agent.workers.local_worker().policy_map
         state_init = {p: m.get_initial_state() for p, m in policy_map.items()}
         use_lstm = {p: len(s) > 0 for p, s in state_init.items()}
+        # print(state_init)
     else:
         from gym import envs
         if envs.registry.env_specs.get(agent.config["env"]):
@@ -447,6 +449,10 @@ def rollout(agent,
     times = []
 
     while keep_going(steps, num_steps, episodes, num_episodes):
+        # print("policies: ")
+        # for p, m in policy_map.items():
+        #     print(p)
+        #     print(m)
         mapping_cache = {}  # in case policy_agent_mapping is stochastic
         saver.begin_rollout()
         obs = env.reset()
@@ -579,7 +585,9 @@ def rollout(agent,
         'time_std': np.std(times)
     }
     wandb.log(metric)
-    wandb.save(video_dir)
+    # print(video_dir)
+    if args.video_dir:
+        wandb.save(video_dir)
 
 if __name__ == "__main__":
     parser = create_parser()

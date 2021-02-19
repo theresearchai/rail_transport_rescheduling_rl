@@ -38,6 +38,8 @@ def load_class_from_file(_file_path):
             "Did you name the class correctly ?".format(
                 filename, class_name
             ))
+    except:
+        print("Something else went wrong")
     return filename, class_name, _class
 
 
@@ -79,6 +81,8 @@ def load_envs(local_dir="."):
             the class implementation, should be an inheritance
             of gym.Env
         """
+        if os.path.basename(_file_path) == "__init__.py":
+            continue 
         env_name, class_name, _class = load_class_from_file(_file_path)
         env = _class
         # Validate the class
