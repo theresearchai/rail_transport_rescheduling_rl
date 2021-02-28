@@ -1,0 +1,15 @@
+env: flatland_sparse
+env_config:
+    seed: 1234
+    observation: tree
+    observation_config:
+        max_depth: 2
+        shortest_path_max_depth: 30
+
+    generator: sparse_rail_generator
+    generator_config: small_stoch_v0
+    
+model:
+    fcnet_activation: relu
+    fcnet_hiddens: [256, 256]
+    vf_share_layers: True 
