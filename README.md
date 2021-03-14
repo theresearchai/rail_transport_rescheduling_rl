@@ -1,24 +1,24 @@
-### Environment Setup
+# Setup
 
-#### Flatland Environment
+## Flatland Environment
 You can now run the following:
-```shell
-conda env create -f environment-cpu.yml # creates the flatland-rl environment
+```sh
+conda env create -f environment-cpu.yml # creates the cpu environment
 conda activate flatland-baseline-cpu-env # activates it
 ```
 
 If you have access to GPU:
-```shell
-conda env create -f environment-gpu.yml # creates the flatland-rl environment
+```sh
+conda env create -f environment-gpu.yml # creates the gpu environment
 conda activate flatland-baseline-gpu-env # activates it
 ```
 
 If using Colab Notebook:
 See tutorial
 
-#### Gym Environment
+## Gym Environment
 The flatland enviroments are registered in `ray.tune`, which may not be compatible with some OpenAI Gym functionalities. 
-For some reason, the `Monitor` funtion in `rollout.py` only works with gym environment.
+
 You can customize and register enviroments in `gym` with the following steps.
 
 1. Write your own class `MyFlatland` in `envs/my_flatland.py`. Skip to step 3 if use  enviroments provided by Flatland.
@@ -55,7 +55,7 @@ register(
 ```
 
 4. Remember the unique id.
-5. Run `pip install -e rail_transport_rescheduling_rl`
+5. Go to the parent folder of `rail_transport_rescheduling_rl` and run `pip install -e rail_transport_rescheduling_rl`
 
 Now you can initialize gym enviroment with your environment id.
 ```python
@@ -63,13 +63,22 @@ import gym
 gym.make('rail_transport_rescheduling_rl:myenv-v0')
 ```
 
+## Render
+
+[WARNING] For some reason, the `Monitor` funtion in `rollout.py` only works with gym environment.
+
+Render needs ffmpeg or avconv executables.
+
+On OS X, you can install ffmpeg via `brew install ffmpeg`. On most Ubuntu variants, `sudo apt-get install ffmpeg` should do it. On Ubuntu 14.04, however, you'll need to install avconv with `sudo apt-get install libav-tools`.
+
+
 ------------
 
-### Train Models
+# Train Models
 Simply run `python train.py -f config.yaml` to train a model with the configuration file name `config.yaml` or [common parameters](https://docs.ray.io/en/master/rllib-training.html#common-parameters) used by RLlib.
 All configuration files to run the experiments can be found in `baselines`.
 
-#### Stopping Criteria
+## Stopping Criteria
 Add the `stop` section in config file, for example:
 ```yaml
 stop:
@@ -79,7 +88,7 @@ stop:
 ```
 See RLlib for more stopping criteria options.
 
-#### Save Checkpoints 
+## Save Checkpoints 
 Config `local_dir ` as the path to store checkpoints.
 
 Example:
@@ -94,17 +103,20 @@ config:
 		save_checkpoint: True #Enable checkpoint storing
 ```
 
-#### Resume Training from Checkpoints
+## Resume Training from Checkpoints
 Config `restore` as the path of a previously saved checkpoint to resume training.
 Example:
-```shell
+```yaml
 restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-medium-v0-skip/APEX_flatland_sparse_0_2021-02-05_09-54-43o7u5dtex/checkpoint_30/checkpoint-30
 ```
 
-#### Sync Results to W&B
-1. Install wandb, this should be done after the enviroment setup . If not, run `pip install wandb`.
+## Sync Results to W&B
+1. Install wandb, this should be done after the enviroment setup . If not, run 
+```sh
+pip install wandb
+```
 2. Create and login to your account.
-```shell
+```sh
 wandb login
 ```
 Follow the instruction and copy your API key to terminal.
@@ -119,15 +131,15 @@ config:
 			tags: ["medium_v0", "tree_obs", "apex", "skip"] #tag your model 
 ```
 
-#### Render 
+## Render 
 Visualization of each training iteration will be uploaded to W&B but this will be extremely time consuming.
-```shell
+```yaml
 config:
 	env_config:
 		render: human 
 ```
 
-### Rollout Trained Models
+# Rollout Trained Models
 Run `rollout.py` to evaluate a trained model.
 
 Parameters  | Comments
@@ -141,28 +153,34 @@ cfile | load configuration from file without using `--config`
 video-dir | path to store rendered videos 
 
 
-##### Examples
+## Examples
 
 1. Run with command line configuration.
-```shell
-python rollout.py --checkpoint=/Users/stlp/Downloads/checkpoint-100 --run APEX  --video-dir=/Users/stlp/Desktop/test-gym/outfile --episodes 5 --env 'flatland_sparse' --config '{"env_config": {"test": "true", "generator": "sparse_rail_generator", "generator_config": "small_v0", "observation": "tree", "observation_config": {"max_depth": 2, "shortest_path_max_depth": 30}}, "model": {"fcnet_activation": "relu", "fcnet_hiddens": [256, 256], "vf_share_layers": "True"}}' 
+```sh
+python rollout.py --run APEX --episodes 5 --checkpoint=/Users/stlp/Downloads/checkpoint-100  --env 'flatland_sparse' --config '{"env_config": {"test": "true", "generator": "sparse_rail_generator", "generator_config": "small_v0", "observation": "tree", "observation_config": {"max_depth": 2, "shortest_path_max_depth": 30}}, "model": {"fcnet_activation": "relu", "fcnet_hiddens": [256, 256], "vf_share_layers": "True"}}' 
 ```
 
 2. Run with a configuration file that specifies enviroment settings.
-```shell
-python rollout.py --cfile=/content/gdrive/MyDrive/checkpoints/medium.yaml --checkpoint=/content/gdrive/MyDrive/checkpoints/flatland-random-sparse-small-tree-fc-marwil-il/MARWIL_flatland_sparse_0_beta=1_2021-02-05_10-05-00014kys69/checkpoint_500/checkpoint-500 --env=flatland_sparse --episodes=100 --run=MARWIL
+```sh
+python rollout.py --run MARWIL --episodes 100 --cfile=/content/gdrive/MyDrive/checkpoints/medium.yaml --checkpoint=/content/gdrive/MyDrive/checkpoints/flatland-random-sparse-small-tree-fc-marwil-il/MARWIL_flatland_sparse_0_beta=1_2021-02-05_10-05-00014kys69/checkpoint_500/checkpoint-500 --env 'flatland_sparse' 
 ```
 
-### Hyperparameter Tuning
+3. Use `--video-dir` to render and save rollout results. Remember to use Gym environents.
+```sh
+python rollout.py --checkpoint /Users/stlp/Downloads/checkpoint-100 --run APEX --video-dir=/Users/stlp/Desktop/VRSP/outfile --episodes 1 --env 'rail_transport_rescheduling_rl:small-v0' --config '{"num_workers": 4, "model": {"fcnet_activation": "relu", "fcnet_hiddens": [256, 256], "vf_share_layers": "True"}}' 
+```
+
+
+# Hyperparameter Tuning
 We can use [W&B sweeps](https://docs.wandb.ai/sweeps) to automatically do hyperparameter tuning.
 
 1. Initialize sweep with a a sweep config file
-```shell
+```sh
 wandb sweep sweep.yaml
 ```
 2. Copy the sweep ID printed in terminal
 3. Launch agent(s)
-```shell
+```sh
 wandb agent your-sweep-id
 ```
 
