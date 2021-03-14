@@ -1,0 +1,30 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.10.19
+    framework: tensorflow
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.7.9
+    t:
+      1:
+      - 3
+      2:
+      - 3
+      3:
+      - 3
+      4: 3.7.9
+      5: 0.10.19
+model:
+  desc: null
+  value:
+    fcnet_activation: relu
+    fcnet_hiddens:
+    - 256
+    - 256
+    vf_share_layers: 'True'
+num_workers:
+  desc: null
+  value: 2

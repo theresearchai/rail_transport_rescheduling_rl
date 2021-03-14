@@ -1,0 +1,34 @@
+{
+    "os": "Darwin-19.6.0-x86_64-i386-64bit",
+    "python": "3.7.9",
+    "heartbeatAt": "2021-03-14T13:45:14.785501",
+    "startedAt": "2021-03-14T13:45:11.806342",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "--checkpoint",
+        "/Users/stlp/Downloads/checkpoint-100",
+        "--run",
+        "APEX",
+        "--video-dir=/Users/stlp/Desktop/VRSP/outfile",
+        "--episodes",
+        "1",
+        "--env",
+        "rail_transport_rescheduling_rl:small-v0",
+        "--config",
+        "{\"num_workers\": 4, \"model\": {\"fcnet_activation\": \"relu\", \"fcnet_hiddens\": [256, 256], \"vf_share_layers\": \"True\"}}"
+    ],
+    "state": "running",
+    "codePath": "rollout.py",
+    "program": "rollout.py",
+    "git": {
+        "remote": "https://github.com/theresearchai/rail_transport_rescheduling_rl.git",
+        "commit": "d90e7a4994449f7921adda5062aff8930467a912"
+    },
+    "email": "qye25@wisc.edu",
+    "root": "/Users/stlp/Desktop/VRSP/rail_transport_rescheduling_rl",
+    "host": "STLP-0109",
+    "username": "stlp",
+    "executable": "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/bin/python"
+}

@@ -1,0 +1,40 @@
+2021-02-17 18:51:17,829	INFO resource_spec.py:212 -- Starting Ray with 1.81 GiB memory available for workers and up to 0.93 GiB for objects. You can adjust these settings with ray.init(memory=<bytes>, object_store_memory=<bytes>).
+2021-02-17 18:51:18,173	INFO services.py:1170 -- View the Ray dashboard at [1m[32mlocalhost:8265[39m[22m
+2021-02-17 18:51:18,860	INFO trainer.py:421 -- Tip: set 'eager': true or the --eager flag to enable TensorFlow eager execution
+2021-02-17 18:51:18,910	INFO trainer.py:580 -- Current log_level is WARN. For more information, set 'log_level': 'INFO' / 'DEBUG' or use the -v and -vv flags.
+Traceback (most recent call last):
+  File "rollout.py", line 613, in <module>
+    run(args, parser)
+  File "rollout.py", line 329, in run
+    agent = cls(env=args.env, config=config)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/agents/trainer_template.py", line 90, in __init__
+    Trainer.__init__(self, config, env, logger_creator)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/agents/trainer.py", line 448, in __init__
+    super().__init__(config, logger_creator)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/tune/trainable.py", line 174, in __init__
+    self._setup(copy.deepcopy(self.config))
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/agents/trainer.py", line 591, in _setup
+    self._init(self.config, self.env_creator)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/agents/trainer_template.py", line 117, in _init
+    self.config["num_workers"])
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/agents/trainer.py", line 662, in _make_workers
+    logdir=self.logdir)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/evaluation/worker_set.py", line 61, in __init__
+    RolloutWorker, env_creator, policy, 0, self._local_config)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/evaluation/worker_set.py", line 279, in _make_worker
+    extra_python_environs=extra_python_environs)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/evaluation/rollout_worker.py", line 303, in __init__
+    self.env = _validate_env(env_creator(env_context))
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/ray/rllib/agents/trainer.py", line 546, in <lambda>
+    self.env_creator = lambda env_config: gym.make(env)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/gym/envs/registration.py", line 145, in make
+    return registry.make(id, **kwargs)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/gym/envs/registration.py", line 90, in make
+    env = spec.make(**kwargs)
+  File "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/gym/envs/registration.py", line 60, in make
+    env = cls(**_kwargs)
+  File "/Users/stlp/Desktop/VRSP/gym_env_registration/envs/flatland_sparse.py", line 31, in __init__
+    self._config = get_generator_config(env_config['generator_config'])
+  File "/Users/stlp/Desktop/VRSP/rail_transport_rescheduling_rl/envs/flatland/__init__.py", line 14, in get_generator_config
+    return GENERATOR_CONFIG_REGISTRY[name]
+KeyError: 'medium'

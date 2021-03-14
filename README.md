@@ -104,7 +104,8 @@ config:
 ```
 
 ## Resume Training from Checkpoints
-Config `restore` as the path of a previously saved checkpoint to resume training.
+Config `restore` as the path of a previously saved checkpoint to resume training. Some saved checkpoints can be found [here](https://drive.google.com/drive/folders/1AdPSM1ZiW5XWv0gl7WzQw8qFEywatfZf?usp=sharing).
+
 Example:
 ```yaml
 restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-medium-v0-skip/APEX_flatland_sparse_0_2021-02-05_09-54-43o7u5dtex/checkpoint_30/checkpoint-30

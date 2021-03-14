@@ -1,0 +1,35 @@
+{
+    "root": "/Users/stlp/Desktop/VRSP/rail_transport_rescheduling_rl",
+    "program": "rollout.py",
+    "git": {
+        "remote": "https://github.com/theresearchai/rail_transport_rescheduling_rl.git",
+        "commit": "2ad6c818f7c822f79100212b5e6419cd055983bf"
+    },
+    "email": "qye25@wisc.edu",
+    "startedAt": "2021-02-18T02:44:13.029586",
+    "host": "STLP-0109",
+    "username": "stlp",
+    "executable": "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/bin/python",
+    "os": "Darwin-19.6.0-x86_64-i386-64bit",
+    "python": "3.7.9",
+    "cpu_count": 8,
+    "args": [
+        "--checkpoint",
+        "/Users/stlp/Downloads/checkpoint-100",
+        "--run",
+        "APEX",
+        "--video-dir=/Users/stlp/Desktop/outfile",
+        "--episodes",
+        "10",
+        "--env",
+        "gym_env_registration:small-v0",
+        "--config",
+        "{\"model\": {\"fcnet_activation\": \"relu\", \"fcnet_hiddens\": [256, 256], \"vf_share_layers\": \"True\"}}"
+    ],
+    "state": "killed",
+    "jobType": null,
+    "mode": "run",
+    "project": "rollout",
+    "heartbeatAt": "2021-02-18T02:45:18.626778",
+    "exitcode": 255
+}

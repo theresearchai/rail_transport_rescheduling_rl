@@ -1,0 +1,382 @@
+2021-02-17 19:11:40,229	INFO resource_spec.py:212 -- Starting Ray with 2.25 GiB memory available for workers and up to 1.13 GiB for objects. You can adjust these settings with ray.init(memory=<bytes>, object_store_memory=<bytes>).
+2021-02-17 19:11:40,575	INFO services.py:1170 -- View the Ray dashboard at [1m[32mlocalhost:8265[39m[22m
+2021-02-17 19:11:41,150	INFO trainer.py:421 -- Tip: set 'eager': true or the --eager flag to enable TensorFlow eager execution
+2021-02-17 19:11:41,191	INFO trainer.py:580 -- Current log_level is WARN. For more information, set 'log_level': 'INFO' / 'DEBUG' or use the -v and -vv flags.
+==================================================
+{'grid_mode': False,
+ 'height': 25,
+ 'max_num_cities': 4,
+ 'max_rails_between_cities': 2,
+ 'max_rails_in_city': 3,
+ 'number_of_agents': 5,
+ 'regenerate_rail_on_reset': True,
+ 'regenerate_schedule_on_reset': True,
+ 'seed': 1234,
+ 'width': 25}
+==================================================
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+  "Could not set all required cities!")
+2021-02-17 19:11:46,758	WARNING trainer_template.py:124 -- The experimental distributed execution API is enabled for this algorithm. Disable this by setting 'use_exec_api': False.
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config medium_stoch_v2 from medium_stoch_v2.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18589)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18591)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config small_stoch_v0 from small_stoch_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config medium_v0 from medium_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18586)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config 32x32_v0 from 32x32_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config small_stoch_v1 from small_stoch_v1.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config small_triple_v0 from small_triple_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config small_single_v0 from small_single_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config large_stoch_v0 from large_stoch_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config small_double_v0 from small_double_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18588)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config adrian_v0 from adrian_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config small_v0 from small_v0.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18590)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Generator Config medium_stoch_v1 from medium_stoch_v1.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Evaluation Config enable_explore from enable_explore.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Evaluation Config default_render from default_render.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Evaluation Config test_render from test_render.yaml
+[2m[36m(pid=18587)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18593)[0m -    Successfully Loaded Evaluation Config default from default.yaml
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18592)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18592)[0m ==================================================
+[2m[36m(pid=18592)[0m {'grid_mode': False,
+[2m[36m(pid=18592)[0m  'height': 25,
+[2m[36m(pid=18592)[0m  'max_num_cities': 4,
+[2m[36m(pid=18592)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18592)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18592)[0m  'number_of_agents': 5,
+[2m[36m(pid=18592)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18592)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18592)[0m  'seed': 1234,
+[2m[36m(pid=18592)[0m  'width': 25}
+[2m[36m(pid=18592)[0m ==================================================
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18588)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18588)[0m ==================================================
+[2m[36m(pid=18588)[0m {'grid_mode': False,
+[2m[36m(pid=18588)[0m  'height': 25,
+[2m[36m(pid=18588)[0m  'max_num_cities': 4,
+[2m[36m(pid=18588)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18588)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18588)[0m  'number_of_agents': 5,
+[2m[36m(pid=18588)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18588)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18588)[0m  'seed': 1234,
+[2m[36m(pid=18588)[0m  'width': 25}
+[2m[36m(pid=18588)[0m ==================================================
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18589)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18589)[0m ==================================================
+[2m[36m(pid=18589)[0m {'grid_mode': False,
+[2m[36m(pid=18589)[0m  'height': 25,
+[2m[36m(pid=18589)[0m  'max_num_cities': 4,
+[2m[36m(pid=18589)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18589)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18589)[0m  'number_of_agents': 5,
+[2m[36m(pid=18589)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18589)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18589)[0m  'seed': 1234,
+[2m[36m(pid=18589)[0m  'width': 25}
+[2m[36m(pid=18589)[0m ==================================================
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18587)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18587)[0m ==================================================
+[2m[36m(pid=18587)[0m {'grid_mode': False,
+[2m[36m(pid=18587)[0m  'height': 25,
+[2m[36m(pid=18587)[0m  'max_num_cities': 4,
+[2m[36m(pid=18587)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18587)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18587)[0m  'number_of_agents': 5,
+[2m[36m(pid=18587)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18587)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18587)[0m  'seed': 1234,
+[2m[36m(pid=18587)[0m  'width': 25}
+[2m[36m(pid=18587)[0m ==================================================
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18586)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18586)[0m ==================================================
+[2m[36m(pid=18586)[0m {'grid_mode': False,
+[2m[36m(pid=18586)[0m  'height': 25,
+[2m[36m(pid=18586)[0m  'max_num_cities': 4,
+[2m[36m(pid=18586)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18586)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18586)[0m  'number_of_agents': 5,
+[2m[36m(pid=18586)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18586)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18586)[0m  'seed': 1234,
+[2m[36m(pid=18586)[0m  'width': 25}
+[2m[36m(pid=18586)[0m ==================================================
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class LocalConflictObs from local_conflict_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class ForwardActionObs from forward_action_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class CombinedObs from combined_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class NewTreeObsBuilder from new_tree_obs_builder.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18593)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18593)[0m ==================================================
+[2m[36m(pid=18593)[0m {'grid_mode': False,
+[2m[36m(pid=18593)[0m  'height': 25,
+[2m[36m(pid=18593)[0m  'max_num_cities': 4,
+[2m[36m(pid=18593)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18593)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18593)[0m  'number_of_agents': 5,
+[2m[36m(pid=18593)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18593)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18593)[0m  'seed': 1234,
+[2m[36m(pid=18593)[0m  'width': 25}
+[2m[36m(pid=18593)[0m ==================================================
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18590)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18590)[0m ==================================================
+[2m[36m(pid=18590)[0m {'grid_mode': False,
+[2m[36m(pid=18590)[0m  'height': 25,
+[2m[36m(pid=18590)[0m  'max_num_cities': 4,
+[2m[36m(pid=18590)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18590)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18590)[0m  'number_of_agents': 5,
+[2m[36m(pid=18590)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18590)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18590)[0m  'seed': 1234,
+[2m[36m(pid=18590)[0m  'width': 25}
+[2m[36m(pid=18590)[0m ==================================================
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class NewTreeObs from new_tree_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class RandomActionObs from random_action_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class GlobalDensityObs from global_density_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class ShortestPathObs from shortest_path_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class Utils from utils.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class GlobalObs from global_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class TreeObs from tree_obs.py
+[2m[36m(pid=18591)[0m -    Successfully Loaded Observation class ShortestPathActionObs from shortest_path_action_obs.py
+[2m[36m(pid=18591)[0m ==================================================
+[2m[36m(pid=18591)[0m {'grid_mode': False,
+[2m[36m(pid=18591)[0m  'height': 25,
+[2m[36m(pid=18591)[0m  'max_num_cities': 4,
+[2m[36m(pid=18591)[0m  'max_rails_between_cities': 2,
+[2m[36m(pid=18591)[0m  'max_rails_in_city': 3,
+[2m[36m(pid=18591)[0m  'number_of_agents': 5,
+[2m[36m(pid=18591)[0m  'regenerate_rail_on_reset': True,
+[2m[36m(pid=18591)[0m  'regenerate_schedule_on_reset': True,
+[2m[36m(pid=18591)[0m  'seed': 1234,
+[2m[36m(pid=18591)[0m  'width': 25}
+[2m[36m(pid=18591)[0m ==================================================
+2021-02-17 19:11:58,250	INFO trainable.py:180 -- _setup took 17.059 seconds. If your trainable is slow to initialize, consider setting reuse_actors=True to reduce actor creation overheads.
+2021-02-17 19:11:58,251	INFO trainable.py:217 -- Getting current IP.
+2021-02-17 19:11:58,517	INFO trainable.py:217 -- Getting current IP.
+2021-02-17 19:11:58,518	INFO trainable.py:423 -- Restored on 192.168.0.31 from checkpoint: /Users/stlp/Downloads/checkpoint-100
+2021-02-17 19:11:58,518	INFO trainable.py:430 -- Current state after restoring: {'_iteration': 100, '_timesteps_total': None, '_time_total': 4314.331633806229, '_episodes_total': 173}
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/gym/logger.py:30: UserWarning: [33mWARN: Trying to monitor an environment which has no 'spec' set. This usually means you did not create it via 'gym.make', and is recommended only for advanced users.[0m
+  warnings.warn(colorize('%s: %s'%('WARN', msg % args), 'yellow'))
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+  "Could not set all required cities!")
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:647: UserWarning: [WARNING] Changing to Grid mode to place at least 2 cities.
+  warnings.warn("[WARNING] Changing to Grid mode to place at least 2 cities.")
+[2m[36m(pid=18592)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18592)[0m   "Could not set all required cities!")
+[2m[36m(pid=18589)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18589)[0m   "Could not set all required cities!")
+[2m[36m(pid=18586)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18586)[0m   "Could not set all required cities!")
+[2m[36m(pid=18587)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18587)[0m   "Could not set all required cities!")
+[2m[36m(pid=18590)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18590)[0m   "Could not set all required cities!")
+[2m[36m(pid=18591)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18591)[0m   "Could not set all required cities!")
+[2m[36m(pid=18588)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18588)[0m   "Could not set all required cities!")
+[2m[36m(pid=18593)[0m /Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+[2m[36m(pid=18593)[0m   "Could not set all required cities!")
+2021-02-17 19:12:20,787	WARNING worker.py:1090 -- The actor or task with ID ffffffffffffffff55c3b2b60100 is pending and cannot currently be scheduled. It requires {CPU: 1.000000} for execution and {CPU: 1.000000} for placement, but this node only has remaining {node:192.168.0.31: 1.000000}, {object_store_memory: 0.781250 GiB}, {memory: 2.246094 GiB}. In total there are 0 pending tasks and 24 pending actors on this node. This is likely due to all cluster resources being claimed by actors. To resolve the issue, consider creating fewer actors or increase the resources available to this Ray cluster. You can ignore this message if this Ray cluster is expected to auto-scale.
+Episode #0: score: -719.00000 (-719.00000), normalized score: -0.35073 (-0.35073), percentage_complete: 1.00000 (1.00000)
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/gym/logger.py:30: UserWarning: [33mWARN: Trying to monitor an environment which has no 'spec' set. This usually means you did not create it via 'gym.make', and is recommended only for advanced users.[0m
+  warnings.warn(colorize('%s: %s'%('WARN', msg % args), 'yellow'))
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/flatland/envs/rail_generators.py:725: UserWarning: Could not set all required cities!
+  "Could not set all required cities!")
+Episode #1: score: -177.00000 (-448.00000), normalized score: -0.08429 (-0.21751), percentage_complete: 1.00000 (1.00000)
+/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/lib/python3.7/site-packages/gym/logger.py:30: UserWarning: [33mWARN: Trying to monitor an environment which has no 'spec' set. This usually means you did not create it via 'gym.make', and is recommended only for advanced users.[0m
+  warnings.warn(colorize('%s: %s'%('WARN', msg % args), 'yellow'))
+Episode #2: score: -368.00000 (-421.33333), normalized score: -0.17951 (-0.20484), percentage_complete: 1.00000 (1.00000)
+Evaluation completed:
+Episodes: 3
+Mean Reward: -421.0
+Mean Normalized Reward: -0.0
+Mean Percentage Complete: 1.0
+Mean Steps: 148.33

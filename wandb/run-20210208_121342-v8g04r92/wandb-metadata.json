@@ -1,0 +1,33 @@
+{
+    "root": "/Users/stlp/Desktop/rail_transport_rescheduling_rl",
+    "program": "rollout.py",
+    "git": {
+        "remote": "https://github.com/theresearchai/rail_transport_rescheduling_rl.git",
+        "commit": "dd63be1ca562b5d7be01603d3d50b312bb2d49e0"
+    },
+    "email": "qye25@wisc.edu",
+    "startedAt": "2021-02-08T12:13:43.326102",
+    "host": "STLP-0109",
+    "username": "stlp",
+    "executable": "/Users/stlp/opt/anaconda3/envs/flatland-baseline-cpu-env/bin/python",
+    "os": "Darwin-19.6.0-x86_64-i386-64bit",
+    "python": "3.7.9",
+    "cpu_count": 8,
+    "args": [
+        "/Users/stlp/Downloads/checkpoint-100",
+        "--run",
+        "APEX",
+        "--episodes",
+        "2",
+        "--env",
+        "flatland_sparse",
+        "--config",
+        "{\"env_config\": {\"test\": \"true\", \"generator\": \"sparse_rail_generator\", \"generator_config\": \"small_v0\", \"observation\": \"tree\", \"observation_config\": {\"max_depth\": 2, \"shortest_path_max_depth\": 30}}, \"model\": {\"fcnet_activation\": \"relu\", \"fcnet_hiddens\": [256, 256], \"vf_share_layers\": \"True\"}}"
+    ],
+    "state": "finished",
+    "jobType": null,
+    "mode": "run",
+    "project": "rollout",
+    "heartbeatAt": "2021-02-08T12:14:05.161269",
+    "exitcode": 0
+}
