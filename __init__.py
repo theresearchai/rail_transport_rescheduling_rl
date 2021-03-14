@@ -1,8 +1,11 @@
 from gym.envs.registration import register
 import yaml
+import os
 
-with open('/Users/stlp/Desktop/test-gym/small.yaml') as f:
-    env_config = yaml.safe_load(f)
+def get_env_config(file):
+    with open(file) as f:
+        env_config = yaml.safe_load(f)
+    return env_config['env_config']
 # print(env_config)
 register(
     id='base-v0',
@@ -11,5 +14,13 @@ register(
 register(
     id='small-v0',
     entry_point='rail_transport_rescheduling_rl.envs:FlatlandSparse',
-    kwargs={'env_config': env_config['env_config']}
+    kwargs={'env_config': get_env_config('rollout_envs/small.yaml')}
 )
+
+register(
+    id='medium-v0',
+    entry_point='rail_transport_rescheduling_rl.envs:FlatlandSparse',
+    kwargs={'env_config': get_env_config('rollout_envs/medium.yaml')}
+)
+
+## Register more environments here

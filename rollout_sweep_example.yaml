@@ -1,0 +1,22 @@
+method: bayes
+metric:
+  goal: maximize
+  name: normalized_score
+parameters:
+  cfile:
+    values:
+    - /content/gdrive/MyDrive/checkpoints/speed.yaml
+    - /content/gdrive/MyDrive/checkpoints/malfunc.yaml
+    - /content/gdrive/MyDrive/checkpoints/malfunc_speed.yaml
+    - /content/gdrive/MyDrive/checkpoints/small.yaml
+    - /content/gdrive/MyDrive/checkpoints/medium.yaml
+  checkpoint:
+    values:
+    - /content/gdrive/MyDrive/checkpoints/ppo-tree-obs-medium-v0/PPO_flatland_sparse_0_2021-02-01_06-05-599u_33z4x/checkpoint_500/checkpoint-500
+  env:
+    value: flatland_sparse
+  episodes:
+    value: 100
+  run:
+    value: PPO
+program: rollout.py
