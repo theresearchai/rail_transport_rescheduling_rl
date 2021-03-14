@@ -272,6 +272,10 @@ def create_parser(parser_creator=None):
         help="Write progress to a temporary file (updated "
         "after each episode). An output filename must be set using --out; "
         "the progress file will live in the same folder.")
+    parser.add_argument(
+        "--project",
+        default="Rollout",
+        help="Save rollouts to W&B project.")
     return parser
 
 
@@ -320,7 +324,7 @@ def run(args, parser):
             parser.error("the following arguments are required: --env")
         args.env = config.get("env")
 
-    wandb.init(config=config, project="rollout")
+    wandb.init(config=config, project=args.project)
     # print(wandb.run.dir)
     ray.init()
 

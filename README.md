@@ -151,7 +151,7 @@ env | enviroment
 config | environment and model configuration
 cfile | load configuration from file without using `--config`
 video-dir | path to store rendered videos 
-
+project | W&B project name, sync output files in `video-dir` to W&B
 
 ## Examples
 
