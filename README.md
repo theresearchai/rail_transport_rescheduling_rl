@@ -66,7 +66,7 @@ conda activate flatland-baseline-gpu-env # activates it
 ```
 
 If using Colab Notebook:
-See [tutorial](https://colab.research.google.com/drive/1aZoKFkuNYeWKG1m_S6sadD1YG6nFnf67?usp=sharing).
+See [tutorial](https://colab.research.google.com/drive/1aZoKFkuNYeWKG1m_S6sadD1YG6nFnf67?usp=sharing) or use `Tutorial.ipynb`. 
 
 ### Gym Environment
 The flatland enviroments are registered in `ray.tune`, which may not be compatible with some OpenAI Gym functionalities. 
