@@ -240,7 +240,7 @@ wandb agent your-sweep-id
 We can also use W&B sweeps to rollout multiple models or maps. See `rollout_sweep_example.yaml`.
 
 
-## Results and Analysis
+## Results
 Find results and analysis [here](https://docs.google.com/presentation/d/1IZWOUVTYFUjoeLVcMOUuYLKwFZEKg6PVfytiimryaIY/present?usp=sharing)
 
 ## Reference
