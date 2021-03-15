@@ -30,18 +30,7 @@ MOVE_FORWARD | <ul> <li>If the agent is at an intersection with an allowed trans
 MOVE_RIGHT |<ul> <li> The same as deviate left but for right turns.</li> </ul>
 STOP_MOVING | <ul> <li>This action causes the agent to stop at the current cell.</li> </ul>
 
-### Rewards
 
-At each time step, each agent (train) receives a combination of a local and a global reward:
-
-
-$$r_i(t) = \alpha r_l(t) + \beta r_g(t)$$
-
-Locally, the agent receives $$r_l = 0$$ after it has reached its target location, otherwise, $$r_l = 1$$. 
-
-The global reward rg only returns 1 when all agents have reached their targets, otherwise, $$r_g = 0$$. 
-
-$$\alpha$$ and $$\beta$$ are factors for tuning collaborative behavior.
 
 
 
