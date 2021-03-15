@@ -86,7 +86,7 @@ All configuration files to run the experiments can be found in `baselines`.
 
 ### Stopping Criteria
 Add the `stop` section in config file, for example:
-```yaml
+```
 stop:
 	timesteps_total: 15000000
 	# training_iteration: 1000
@@ -98,7 +98,7 @@ See RLlib for more stopping criteria options.
 Config `local_dir ` as the path to store checkpoints.
 
 Example:
-```yaml
+```
 checkpoint_freq: 10 #save checkpoint every 10 iterations
 checkpoint_at_end: True #save checkpoint after training is done
 keep_checkpoints_num: 1000 #maximum number of checkpoints to be saved
@@ -129,7 +129,7 @@ wandb login
 Follow the instruction and copy your API key to terminal.
 
 3. Config your wandb account info in the `wandb` section.
-```sh
+```
 config:
 	env_config:
 		wandb:
@@ -192,6 +192,9 @@ wandb agent your-sweep-id
 ```
 
 We can also use W&B sweeps to rollout multiple models or maps. See `rollout_sweep_example.yaml`.
+
+
+## Reference
 
 
 # 🚂 Flatland Baselines
