@@ -241,7 +241,7 @@ We can also use W&B sweeps to rollout multiple models or maps. See `rollout_swee
 
 
 ## Results
-Find results and analysis [here](https://docs.google.com/presentation/d/1IZWOUVTYFUjoeLVcMOUuYLKwFZEKg6PVfytiimryaIY/present?usp=sharing)
+Find result analysis and presentation [here](https://docs.google.com/presentation/d/1IZWOUVTYFUjoeLVcMOUuYLKwFZEKg6PVfytiimryaIY/present?usp=sharing).
 
 ## Reference
 
