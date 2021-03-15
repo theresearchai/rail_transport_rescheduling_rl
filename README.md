@@ -205,7 +205,7 @@ We can also use W&B sweeps to rollout multiple models or maps. See `rollout_swee
 [4] Wälter, Jonas (2020), Existing and Novel Approaches to the Vehicle Rescheduling Problem (VRSP). Masters Thesis, HSR Hochschule für Technik Rapperswil.
 
 
-##Notes
+## Notes
 
 - The basic content of this repository is adapted from [Flatland Baselines](https://gitlab.aicrowd.com/flatland/neurips2020-flatland-baselines)
 - The baselines are under the MIT license
