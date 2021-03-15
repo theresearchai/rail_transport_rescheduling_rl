@@ -2,7 +2,12 @@
 
 ## Introduction
 
+The vehicle rescheduling problem (VRSP) is a combinatorial optimization and integer programming problem seeking an optimal solution that makes all the trains arrive at their destinations with minimal total travel time when some previously assigned trips are disrupted and required to be rescheduled with minimal delay.
+
 ## Motivation
+
+Currently, researchers are seeking systems and solutions to VRSP (Vehicle Rescheduling Problem) that can optimize large-scale traffic and quickly adapt to new environments. Deep Reinforcement Learning is demonstrated to be an alternative to Operation Research in solving railway traffic optimization problems due to its fast inference time and high adaptability. Hence, this project will focus on the novel Deep RL approach to evaluate its performance in solving VRSP.
+
 
 ## Setup
 
