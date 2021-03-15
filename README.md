@@ -30,6 +30,21 @@ MOVE_FORWARD | <ul> <li>If the agent is at an intersection with an allowed trans
 MOVE_RIGHT |<ul> <li> The same as deviate left but for right turns.</li> </ul>
 STOP_MOVING | <ul> <li>This action causes the agent to stop at the current cell.</li> </ul>
 
+### Rewards
+
+At each time step, each agent (train) receives a combination of a local and a global reward:
+
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=r_i(t) = \alpha r_l(t) %2b \beta r_g(t)">
+</p>
+
+Locally, the agent receives <img src="https://render.githubusercontent.com/render/math?math=r_l = 0"> after it has reached its target location, otherwise, <img src="https://render.githubusercontent.com/render/math?math=r_l = 1">. 
+
+The global reward <img src="https://render.githubusercontent.com/render/math?math=r_g"> only returns <img src="https://render.githubusercontent.com/render/math?math=1"> when all agents have reached their targets, otherwise, <img src="https://render.githubusercontent.com/render/math?math=r_g = 0">. 
+
+<img src="https://render.githubusercontent.com/render/math?math=\alpha"> and <img src="https://render.githubusercontent.com/render/math?math=\beta"> are factors for tuning collaborative behavior.
+
+
 
 
 
