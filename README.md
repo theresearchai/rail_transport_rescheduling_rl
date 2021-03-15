@@ -1,4 +1,4 @@
-# Reinforcement Learning in VRSP
+# Deep Reinforcement Learning in VRSP
 
 ## Introduction
 
