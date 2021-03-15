@@ -196,6 +196,15 @@ We can also use W&B sweeps to rollout multiple models or maps. See `rollout_swee
 
 ## Reference
 
+[1] Flatland “https://flatland.aicrowd.com”
+
+[2] David Silver’s RL Lectures “https://www.davidsilver.uk/teaching/”
+
+[3] "Real World Applications of Flatland": Panel Discussion with SBB, DeutschBahn, SNCF. “https://slideslive.com/38942748/real-world-applications-of-flatland-panel-discussion-with-sbb-deutschbahn-sncf”
+
+[4] Wälter, Jonas (2020), Existing and Novel Approaches to the Vehicle Rescheduling Problem (VRSP). Masters Thesis, HSR Hochschule für Technik Rapperswil.
+
+
 
 # 🚂 Flatland Baselines
 
