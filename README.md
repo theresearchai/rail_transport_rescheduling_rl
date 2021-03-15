@@ -1,6 +1,12 @@
-# Setup
+# Reinforcement Learning in VRSP
 
-## Flatland Environment
+## Introduction
+
+## Motivation
+
+## Setup
+
+### Flatland Environment
 You can now run the following:
 ```sh
 conda env create -f environment-cpu.yml # creates the cpu environment
@@ -16,7 +22,7 @@ conda activate flatland-baseline-gpu-env # activates it
 If using Colab Notebook:
 See [tutorial](https://colab.research.google.com/drive/1aZoKFkuNYeWKG1m_S6sadD1YG6nFnf67?usp=sharing).
 
-## Gym Environment
+### Gym Environment
 The flatland enviroments are registered in `ray.tune`, which may not be compatible with some OpenAI Gym functionalities. 
 
 You can customize and register enviroments in `gym` with the following steps.
@@ -63,7 +69,7 @@ import gym
 gym.make('rail_transport_rescheduling_rl:myenv-v0')
 ```
 
-## Render
+### Render
 
 [WARNING] For some reason, the `Monitor` funtion in `rollout.py` only works with gym environment.
 
@@ -74,11 +80,11 @@ On OS X, you can install ffmpeg via `brew install ffmpeg`. On most Ubuntu varian
 
 ------------
 
-# Train Models
+## Train Models
 Simply run `python train.py -f config.yaml` to train a model with the configuration file name `config.yaml` or [common parameters](https://docs.ray.io/en/master/rllib-training.html#common-parameters) used by RLlib.
 All configuration files to run the experiments can be found in `baselines`.
 
-## Stopping Criteria
+### Stopping Criteria
 Add the `stop` section in config file, for example:
 ```yaml
 stop:
@@ -88,7 +94,7 @@ stop:
 ```
 See RLlib for more stopping criteria options.
 
-## Save Checkpoints 
+### Save Checkpoints 
 Config `local_dir ` as the path to store checkpoints.
 
 Example:
@@ -103,7 +109,7 @@ config:
 		save_checkpoint: True #Enable checkpoint storing
 ```
 
-## Resume Training from Checkpoints
+### Resume Training from Checkpoints
 Config `restore` as the path of a previously saved checkpoint to resume training. Some saved checkpoints can be found [here](https://drive.google.com/drive/folders/1AdPSM1ZiW5XWv0gl7WzQw8qFEywatfZf?usp=sharing).
 
 Example:
@@ -111,7 +117,7 @@ Example:
 restore: /content/gdrive/MyDrive/checkpoints/apex-tree-obs-medium-v0-skip/APEX_flatland_sparse_0_2021-02-05_09-54-43o7u5dtex/checkpoint_30/checkpoint-30
 ```
 
-## Sync Results to W&B
+### Sync Results to W&B
 1. Install wandb, this should be done after the enviroment setup . If not, run 
 ```sh
 pip install wandb
@@ -123,7 +129,7 @@ wandb login
 Follow the instruction and copy your API key to terminal.
 
 3. Config your wandb account info in the `wandb` section.
-```yaml
+```sh
 config:
 	env_config:
 		wandb:
@@ -132,7 +138,7 @@ config:
 			tags: ["medium_v0", "tree_obs", "apex", "skip"] #tag your model 
 ```
 
-## Render 
+### Render 
 Visualization of each training iteration will be uploaded to W&B but this will be extremely time consuming.
 ```yaml
 config:
@@ -140,7 +146,7 @@ config:
 		render: human 
 ```
 
-# Rollout Trained Models
+## Rollout Trained Models
 Run `rollout.py` to evaluate a trained model.
 
 Parameters  | Comments
@@ -154,7 +160,7 @@ cfile | load configuration from file without using `--config`
 video-dir | path to store rendered videos 
 project | W&B project name, sync output files in `video-dir` to W&B
 
-## Examples
+### Examples
 
 1. Run with command line configuration.
 ```sh
@@ -172,7 +178,7 @@ python rollout.py --checkpoint /Users/stlp/Downloads/checkpoint-100 --run APEX -
 ```
 
 
-# Hyperparameter Tuning
+## Hyperparameter Tuning
 We can use [W&B sweeps](https://docs.wandb.ai/sweeps) to automatically do hyperparameter tuning.
 
 1. Initialize sweep with a a sweep config file
