@@ -8,6 +8,43 @@ The vehicle rescheduling problem (VRSP) is a combinatorial optimization and inte
 
 Currently, researchers are seeking systems and solutions to VRSP (Vehicle Rescheduling Problem) that can optimize large-scale traffic and quickly adapt to new environments. Deep Reinforcement Learning is demonstrated to be an alternative to Operation Research in solving railway traffic optimization problems due to its fast inference time and high adaptability. Hence, this project will focus on the novel Deep RL approach to evaluate its performance in solving VRSP.
 
+## Data
+[Flatland environment](https://flatland.aicrowd.com) is used as a simulator to generate simplified railway networks and trains along with the data samples for the RL training and testing tasks.
+
+### Environment
+Two type of maps are generated for training and testing:
+
+- Small maps with 25 x 25 grid size and 5 trains
+![Small Map](img/Map(S).gif)
+
+- Large maps with 50 x 50 grid size and 10 trains
+![Large Map](img/Map(L).gif)
+
+### Actions
+
+Action  | Description
+------------- | -------------
+DO_NOTHING | <ul> <li> If the agent is already moving, it continues moving.</li> <li>If the agent is stopped, it stays stopped.</li> <li>Special case: if the agent is at a dead-end, this action will result in the train turning around.</li> </ul>
+MOVE_LEFT |<ul> <li> If the agent is at an intersection with an allowed transition to its left, it turns left. Otherwise, the action has no effect.</li> <li>If the agent is stopped, it starts moving (if allowed).</li> </ul> 
+MOVE_FORWARD | <ul> <li>If the agent is at an intersection with an allowed transition straight ahead, it moves ahead. Otherwise, the action has no effect.</li> <li>If the agent is stopped, it starts moving.</li>  <li>Special case: if the agent is at a dead-end, this action will result in the train turning around.</li> </ul>
+MOVE_RIGHT |<ul> <li> The same as deviate left but for right turns.</li> </ul>
+STOP_MOVING | <ul> <li>This action causes the agent to stop at the current cell.</li> </ul>
+
+### Rewards
+
+At each time step, each agent (train) receives a combination of a local and a global reward:
+
+
+$$r_i(t) = \alpha r_l(t) + \beta r_g(t)$$
+
+Locally, the agent receives $$r_l = 0$$ after it has reached its target location, otherwise, $$r_l = 1$$. 
+
+The global reward rg only returns 1 when all agents have reached their targets, otherwise, $$r_g = 0$$. 
+
+$$\alpha$$ and $$\beta$$ are factors for tuning collaborative behavior.
+
+
+
 
 ## Setup
 
