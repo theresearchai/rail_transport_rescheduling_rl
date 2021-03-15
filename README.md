@@ -140,7 +140,7 @@ config:
 
 ### Render 
 Visualization of each training iteration will be uploaded to W&B but this will be extremely time consuming.
-```yaml
+```
 config:
 	env_config:
 		render: human 
