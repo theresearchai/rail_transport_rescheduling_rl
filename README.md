@@ -243,6 +243,10 @@ We can also use W&B sweeps to rollout multiple models or maps. See `rollout_swee
 ## Results
 Find result analysis and presentation [here](https://docs.google.com/presentation/d/1IZWOUVTYFUjoeLVcMOUuYLKwFZEKg6PVfytiimryaIY/present?usp=sharing).
 
+Find W&B rollout report [here](https://wandb.ai/qye25/rollout/overview?workspace=user-qye25).
+
+Find W&B training report [part 1](https://wandb.ai/qye25/action-masking-skipping/overview?workspace=user-qye25) and [part 2](https://wandb.ai/qye25/flatland-IL/overview?workspace=user-qye25).
+
 ## Reference
 
 [1] Flatland “https://flatland.aicrowd.com”
